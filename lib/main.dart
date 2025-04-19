@@ -12,6 +12,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
@@ -48,7 +49,8 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text(widget.title),
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-      ),
+      ) ,
+      drawer: _buildDrawer(context),
       body: SingleChildScrollView(
         child: 
         Padding(
@@ -307,4 +309,74 @@ class _MyHomePageState extends State<MyHomePage> {
     _ageController.dispose();
     super.dispose();
   }
+
+
+ Widget _buildDrawer(BuildContext context){
+    return Drawer(
+      child: ListView(
+        padding: EdgeInsets.zero,
+        children: [
+          DrawerHeader(
+            decoration: BoxDecoration(
+              color: Theme.of(context).colorScheme.primary,
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                CircleAvatar(
+                  radius: 30,
+                  backgroundColor: Colors.white,
+                  child: Icon(
+                    Icons.person,
+                    size: 40,
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
+                ),
+                SizedBox(height: 10),
+                Text(
+                  "Navigation Menu",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 20
+                  ),
+                ),
+                Text("Application flutter", style: TextStyle(color: Colors.white70, fontSize: 16))
+              ],
+            ),
+          ),
+          ListTile(
+            leading: Icon(Icons.home),
+            title: Text("Home"),
+            onTap: (){
+              Navigator.pop(context);
+            },
+          ),
+          Divider(),
+          ListTile(
+            leading: Icon(Icons.image),
+            title: Text("Pictures"),
+            onTap: (){
+              Navigator.pop(context);
+            },
+          ),
+          Divider(),
+          ListTile(
+            leading: Icon(Icons.settings),
+            title: Text("Settings"),
+            onTap: (){
+              Navigator.pop(context);
+            },
+          ),
+          Divider(color: Colors.red),
+          ListTile(
+            trailing: Icon(Icons.exit_to_app, color: Colors.red,),
+            title: Text("Disconnect", style: TextStyle(color: Colors.red)),
+            onTap: (){
+              Navigator.pop(context);
+            },
+          ),
+        ],
+      ),
+    );
+ }
 }
