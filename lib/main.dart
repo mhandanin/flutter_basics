@@ -1,5 +1,8 @@
 import 'dart:math';
 
+import 'package:basics/PicturesView.dart';
+import 'package:basics/ProfileView.dart';
+import 'package:basics/SettingsView.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -13,10 +16,18 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
+      title: 'Flutter Basics',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        useMaterial3: true,
       ),
+      initialRoute: '/',
+      routes: {
+        // '/': (context) => const MyHomePage(title: 'home page'),
+        'profile': (context) => const ProfileView(),
+        '/settings': (context) => const SettingsView(),
+        '/pictures': (context) => const PicturesView(),
+      },
       home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
@@ -49,11 +60,10 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text(widget.title),
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-      ) ,
+      ),
       drawer: _buildDrawer(context),
       body: SingleChildScrollView(
-        child: 
-        Padding(
+        child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -310,8 +320,7 @@ class _MyHomePageState extends State<MyHomePage> {
     super.dispose();
   }
 
-
- Widget _buildDrawer(BuildContext context){
+  Widget _buildDrawer(BuildContext context) {
     return Drawer(
       child: ListView(
         padding: EdgeInsets.zero,
@@ -335,48 +344,62 @@ class _MyHomePageState extends State<MyHomePage> {
                 SizedBox(height: 10),
                 Text(
                   "Navigation Menu",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 20
-                  ),
+                  style: TextStyle(color: Colors.white, fontSize: 20),
                 ),
-                Text("Application flutter", style: TextStyle(color: Colors.white70, fontSize: 16))
+                Text(
+                  "Application flutter",
+                  style: TextStyle(color: Colors.white70, fontSize: 16),
+                ),
               ],
             ),
           ),
           ListTile(
             leading: Icon(Icons.home),
             title: Text("Home"),
-            onTap: (){
+            onTap: () {
               Navigator.pop(context);
+            },
+          ),
+          Divider(),
+          ListTile(
+            leading: Icon(Icons.person),
+            title: Text("Profile"),
+            onTap: () {
+              Navigator.pop(context);
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => ProfileView()),
+              );
             },
           ),
           Divider(),
           ListTile(
             leading: Icon(Icons.image),
             title: Text("Pictures"),
-            onTap: (){
+            onTap: () {
               Navigator.pop(context);
+              Navigator.pushNamed(context, '/pictures');
             },
           ),
           Divider(),
           ListTile(
             leading: Icon(Icons.settings),
             title: Text("Settings"),
-            onTap: (){
+            onTap: () {
               Navigator.pop(context);
+              Navigator.pushNamed(context, '/settings');
             },
           ),
           Divider(color: Colors.red),
           ListTile(
-            trailing: Icon(Icons.exit_to_app, color: Colors.red,),
+            trailing: Icon(Icons.exit_to_app, color: Colors.red),
             title: Text("Disconnect", style: TextStyle(color: Colors.red)),
-            onTap: (){
+            onTap: () {
               Navigator.pop(context);
             },
           ),
         ],
       ),
     );
- }
+  }
 }
