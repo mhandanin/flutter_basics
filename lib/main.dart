@@ -3,6 +3,8 @@ import 'dart:math';
 import 'package:basics/PicturesView.dart';
 import 'package:basics/ProfileView.dart';
 import 'package:basics/SettingsView.dart';
+import 'package:basics/TP6_Jours.dart';
+import 'package:basics/TP6_List.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -388,6 +390,28 @@ class _MyHomePageState extends State<MyHomePage> {
             onTap: () {
               Navigator.pop(context);
               Navigator.pushNamed(context, '/settings');
+            },
+          ),
+          Divider(),
+          ListTile(
+            leading: Icon(Icons.list),
+            title: Text("TP6 Lists"),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => Tp6List()),
+              );
+            },
+          ),
+          Divider(),
+          ListTile(
+            leading: Icon(Icons.list_alt_outlined),
+            title: Text("TP6 JOURS"),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => Tp6Jours()),
+              );
             },
           ),
           Divider(color: Colors.red),
