@@ -1,10 +1,11 @@
-import 'dart:math';
-
+import 'package:basics/%20api_users_page.dart';
 import 'package:basics/PicturesView.dart';
+import 'package:basics/ProfilePage.dart';
 import 'package:basics/ProfileView.dart';
 import 'package:basics/SettingsView.dart';
 import 'package:basics/TP6_Jours.dart';
 import 'package:basics/TP6_List.dart';
+import 'package:basics/UserProfile.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -55,6 +56,7 @@ class _MyHomePageState extends State<MyHomePage> {
   double _competenceLevel = 1.0;
   String _formation = 'Informatique';
   bool _notifications = false;
+  UserProfile? _userProfile;
 
   @override
   Widget build(BuildContext context) {
@@ -270,6 +272,26 @@ class _MyHomePageState extends State<MyHomePage> {
                     if (_design) message += 'Design, ';
                     if (_gaming) message += 'GAming';
 
+                    List<String> interets = [];
+                    if (_codage) interets.add("Codage");
+                    if (_design) interets.add("Design");
+                    if (_gaming) interets.add("Jeux vidéo");
+
+                    _userProfile = UserProfile(nom: _nomController.text, age: _ageController.text, genre: _genre, interets: interets, dateDeNaissance: _selectedDate, niveauCompetence: _competenceLevel, formation: _formation, notifications: _notifications);
+
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text('Profile créé avec succès!'),
+                      action: SnackBarAction(label: 'voir progile', onPressed: (){
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => ProfilePage(userProfile: _userProfile),
+                          ),
+                        );
+                      },
+                      ),
+                      )
+                    );
+                    
                     showDialog(
                       context: context,
                       builder:
@@ -411,6 +433,17 @@ class _MyHomePageState extends State<MyHomePage> {
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => Tp6Jours()),
+              );
+            },
+          ),
+          Divider(),
+          ListTile(
+            leading: Icon(Icons.supervised_user_circle),
+            title: Text("USERS API"),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => ApiUsersPage()),
               );
             },
           ),
